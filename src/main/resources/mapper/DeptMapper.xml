@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 全限定名 -->
+<mapper namespace="com.fzc.dao.DeptDAO">
+    <!--//查询所有部门信息
+    public List<Dept> queryAll();-->
+    <select id="queryAll" resultType="Dept">
+        select * from ems_dept where dept_status=1
+    </select>
+    <!--//查询单个部门信息by id
+    public Dept queryById(@Param("dept_id")Integer dept_id);-->
+    <select id="queryById" resultType="Dept">
+        select * from ems_dept where DEPT_ID=#{dept_id} and dept_status=1
+    </select>
+    <!--//模糊查询 by name
+    public Dept queryByLikeName(@Param("content")String content);-->
+    <select id="queryByLikeName" resultType="Dept">
+        select * from ems_dept where dept_name like '%${content}%' and dept_status=1
+    </select>
+    <!--//修改部门信息
+    public void updateDept(Dept dept);-->
+    <update id="updateDept" parameterType="Dept">
+        update ems_dept set dept_name=#{dept_name},dept_duty=#{dept_duty} where dept_id=#{dept_id}
+    </update>
+    <!--//删除部门信息
+    public void deleteDept(@Param("dept_id")Integer dept_id);-->
+    <delete id="deleteDept" parameterType="java.lang.Integer">
+        delete from ems_dept where dept_id=#{dept_id}
+    </delete>
+    <!--//添加部门
+    public void insertDept(Dept dept);-->
+    <insert id="insertDept" parameterType="Dept">
+        insert into ems_dept values(DEPT_SEQ.nextval,#{dept_name},#{dept_duty},1)
+    </insert>
+</mapper>

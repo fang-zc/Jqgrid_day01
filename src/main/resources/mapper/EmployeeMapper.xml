@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 全限定名 -->
+<mapper namespace="com.fzc.dao.EmployeeDAO">
+    <!--//查询所有员工信息 queryAll-->
+   <!-- public List<EmployeeDAO> queryAll();-->
+    <select id="queryAll" resultType="Employee">
+        select * from ems_employee where status=1
+    </select>
+    <!--//查询单个员工信息by id
+    public Employee queryById(@Param("employee_id")Integer employee_id);-->
+    <select id="queryById" resultType="Employee">
+        select * from EMS_EMPLOYEE where EMPLOYEE_ID=#{employee_id} and status=1
+    </select>
+    <!--//模糊查询 by name
+    public Employee queryByLikeName(@Param("content")String content);-->
+    <select id="queryByLikeName" resultType="Employee">
+        select * from EMS_EMPLOYEE where NAME like '%${content}%' and status=1
+    </select>
+    <!--//修改员工信息
+    public void updateEmployee(Employee employee);-->
+    <update id="updateEmployee" parameterType="Employee">
+        update EMS_EMPLOYEE set name=#{name},salary=#{salary},age=#{age} where employee_id=#{employee_id}
+    </update>
+    <!--//删除员工信息
+    public void deleteEmployee(@Param("employee_id")Integer employee_id);-->
+    <delete id="deleteEmployee" parameterType="java.lang.Integer">
+        delete from EMS_EMPLOYEE where EMPLOYEE_ID=#{employee_id}
+    </delete>
+    <!--//添加员工
+    public void insertEmployee(Employee employee);-->
+    <insert id="insertEmployee" parameterType="Employee">
+        insert into EMS_EMPLOYEE values(EMPLOYEE_SEQ.nextval,#{name},#{salary},#{age},1)
+    </insert>
+</mapper>
